@@ -15,7 +15,7 @@ ENV HOME=/home/strong-pm
 USER strong-pm
 
 # Prepare BUILD operations
-COPY artifact.tar.gz /home/strong-pm
+COPY artifact.tgz /home/strong-pm
 COPY setup-runner.sh /home/strong-pm
 RUN bash setup-runner.sh
 
