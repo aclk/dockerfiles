@@ -7,6 +7,7 @@
 # Format: <package-name>-<package-version>.tgz
 ###############
 
+import os
 import sys
 import json
 
@@ -16,7 +17,7 @@ except:
     sys.stderr.write('Missing file name')
     sys.exit(1)
 
-if not os.path.exist(file):
+if not os.path.exists(file):
     sys.stderr.write('Missing file: %s' % file)
     sys.exit(1)
 
