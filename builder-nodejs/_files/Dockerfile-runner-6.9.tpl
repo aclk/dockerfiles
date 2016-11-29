@@ -1,9 +1,11 @@
 FROM node:6.9
 
+RUN npm config set registry=https://registry.npm.taobao.org -g
+
 # Install Strong-PM and build tools
 RUN useradd -ms /bin/bash strong-pm \
     && chown -R strong-pm:strong-pm /usr/local \
-    && su strong-pm -c "npm install -g strong-pm strong-deploy && npm cache clear"
+    && su strong-pm -c "npm install -g strong-pm strong-deploy && npm cache clean"
 
 # Expose strong-pm port
 EXPOSE 8701 3001

@@ -1,8 +1,10 @@
 FROM node:6.9
 
+RUN npm config set registry=https://registry.npm.taobao.org -g
+
 # Install strong-build to prepare the archive
 RUN npm install -g strong-build \
-    && npm cache clear
+    && npm cache clean
 
 ENV node_version 6.9
 
@@ -13,7 +15,7 @@ COPY _files/setup-runner.sh /usr/src/
 # Prepare BUILD operations
 ONBUILD COPY package.json /usr/src/app/
 ONBUILD WORKDIR /usr/src/app/
-ONBUILD RUN npm install
+ONBUILD RUN npm install --production  && npm cache clean # Skip devDepencencies and clean up
 ONBUILD COPY . /usr/src/app
 ONBUILD RUN sl-build --bundle --install --pack --scripts \
     && cd /usr/src \
