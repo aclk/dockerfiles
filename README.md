@@ -46,7 +46,7 @@ Once the `Dockerfile` has been created in each of the repository, you can run th
 - create the runner from the builder
 
 ```
-docker build -t builder-gateway . && ( docker run builder-gateway | docker build -t gateway - )
+docker build -t builder-gateway . && ( docker run --rm builder-gateway | docker build -t gateway - )
 ```
 
 # TODO

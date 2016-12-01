@@ -32,6 +32,7 @@ read PKG_PATH
 
 if [ ! -e "$PKG_PATH" ]; then
     echo "Package file is missing. Aborting."
+    exit 1
 fi
 
 
@@ -58,11 +59,16 @@ echo "FROM builder-nodejs:$VERSION" > Dockerfile
 echo "##"
 echo "## Building the app builder container"
 echo "##"
-APP_NAME=$(head package.json | grep name | cut -d'"' -f4)
+# APP_NAME=$(head package.json | grep name | cut -d'"' -f4)
+APP_NAME=`basename $(dirname $PKG_PATH)`
 docker build -t builder-${APP_NAME} . 
 
 echo "##"
 echo "## Building the app container"
 echo "##"
-docker run builder-${APP_NAME} | docker build -t ${APP_NAME}:${COMMIT} -
+docker run --rm builder-${APP_NAME} | docker build -t ${APP_NAME}:${COMMIT} -
+
+echo "##"
+echo "## Tagging the container"
+echo "##"
 docker tag ${APP_NAME}:${COMMIT} ${APP_NAME}:latest
