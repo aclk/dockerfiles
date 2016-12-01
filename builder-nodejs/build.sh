@@ -19,20 +19,37 @@ echo "  - The APP code base is available, and updated to the"
 echo "    version expected to be packaged (git is expected)"
 echo
 
-# Get the version / path
-echo -n "Which version of Node.js? (4.6/6.9) [default: 6.9] "
-read VERSION
+# Get the version
+if [ -z "$1" ]; then
+    echo -n "Which version of Node.js? (4.6/6.9) [default: 6.9] "
+    read VERSION
+else
+    VERSION="$1"
+fi
 
 if [ -z "$VERSION" ]; then
     VERSION="6.9"
 fi
 
-echo -n "Full path of the app package.json: "
-read PKG_PATH
+# Get PATH
+if [ -z "$2" ]; then
+    echo -n "Full path of the app package.json: "
+    read PKG_PATH
+else 
+    PKG_PATH="$2"
+fi
 
 if [ ! -e "$PKG_PATH" ]; then
     echo "Package file is missing. Aborting."
     exit 1
+fi
+
+# Get NPM registry
+if [ -z "$3" ]; then
+    echo -n "Which NPM registry: (china/default) "
+    read REGISTRY
+else 
+    REGISTRY="$3"
 fi
 
 
@@ -61,7 +78,11 @@ echo "## Building the app builder container"
 echo "##"
 # APP_NAME=$(head package.json | grep name | cut -d'"' -f4)
 APP_NAME=`basename $(dirname $PKG_PATH)`
-docker build -t builder-${APP_NAME} . 
+if [ "$REGISTRY" == 'default' ]; then
+    docker build -t builder-${APP_NAME} .
+elif [ "$REGISTRY" == 'china' ]; then 
+    docker build -t builder-${APP_NAME} --build-arg REGISTRY=https://registry.npm.taobao.org . 
+fi
 
 echo "##"
 echo "## Building the app container"
