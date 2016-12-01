@@ -4,9 +4,7 @@ FROM node:4.6
 RUN npm install -g strong-build \
     && npm cache clean
 
-ENV node_version 4.6
-
-COPY _files/Dockerfile-runner-${node_version}.tpl /app/Dockerfile
+COPY _files/Dockerfile-runner.tpl /app/Dockerfile
 COPY _files/setup-runner.sh /app/
 
 #
@@ -25,6 +23,6 @@ ONBUILD COPY . /app/src
 ONBUILD RUN sl-build --npm \
     && cd /app \
     && mv *tgz artifact.tgz \
-    && tar czf builder-context.tar.gz Dockerfile setup-runner.sh artifact.tgz
+    && tar czf runner-context.tar.gz Dockerfile setup-runner.sh artifact.tgz
 
-ENTRYPOINT ["cat", "/app/builder-context.tar.gz"]
+ENTRYPOINT ["cat", "/app/runner-context.tar.gz"]

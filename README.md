@@ -48,3 +48,8 @@ Once the `Dockerfile` has been created in each of the repository, you can run th
 ```
 docker build -t builder-gateway . && ( docker run builder-gateway | docker build -t gateway - )
 ```
+
+# TODO
+
+- Better docker container image tagging approach
+- Add build version (based on the git commit?) as tag and/or in the image
