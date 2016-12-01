@@ -4,8 +4,8 @@ FROM node:6.9
 RUN npm install -g strong-build \
     && npm cache clean
 
-COPY _files/Dockerfile-runner.tpl /app/Dockerfile
-COPY _files/setup-runner.sh /app/
+COPY Dockerfile-runner.tpl /app/Dockerfile
+COPY setup-runner.sh /app/
 
 #
 # Prepare BUILD operations
