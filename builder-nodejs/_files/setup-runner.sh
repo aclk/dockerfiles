@@ -4,7 +4,7 @@
 #################
 
 # Start the strong-pm service
-/usr/local/bin/sl-pm --base . --listen 8701 &
+/usr/local/bin/sl-pm --base . --listen 8701 --skip-default-install &
 
 # Wait for Strong-PM to be up and running
 sleep 10
