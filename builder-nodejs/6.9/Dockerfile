@@ -11,12 +11,15 @@ COPY setup-runner.sh /app/
 # Prepare BUILD operations
 #
 # 1. separate package.json from the rest to keep the cache
-# 2. install packages, including native extensions (keep cache)
-# 3. copy the remaining of the code
-# 4. run the build/pack operation and prepare the docker context
+# 2. allow build args to override the npm registry
+# 3. install packages, including native extensions (keep cache)
+# 4. copy the remaining of the code
+# 5. run the build/pack operation and prepare the docker context
 #
 ONBUILD COPY package.json /app/src/
 ONBUILD WORKDIR /app/src
+ONBUILD ARG REGISTRY
+ONBUILD ENV npm_config_registry ${REGISTRY} 
 ONBUILD RUN npm install --scripts --production \
     && npm cache clean
 ONBUILD COPY . /app/src
