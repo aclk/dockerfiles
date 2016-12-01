@@ -23,7 +23,7 @@ ONBUILD ENV npm_config_registry ${REGISTRY}
 ONBUILD RUN npm install --scripts --production \
     && npm cache clean
 ONBUILD COPY . /app/src
-ONBUILD RUN sl-build --npm \
+ONBUILD RUN sl-build --build --pack \
     && cd /app \
     && mv *tgz artifact.tgz \
     && tar czf runner-context.tar.gz Dockerfile setup-runner.sh artifact.tgz
