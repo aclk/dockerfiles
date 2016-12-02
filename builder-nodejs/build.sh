@@ -77,7 +77,9 @@ echo "##"
 echo "## Building the app builder container"
 echo "##"
 # APP_NAME=$(head package.json | grep name | cut -d'"' -f4)
-APP_NAME=`basename $(dirname $PKG_PATH)`
+if [ -z "$APP_NAME" ]; then
+    APP_NAME=`basename $(dirname $PKG_PATH)`
+fi
 if [ "$REGISTRY" == 'default' ]; then
     docker build -t builder-${APP_NAME} .
 elif [ "$REGISTRY" == 'china' ]; then 
