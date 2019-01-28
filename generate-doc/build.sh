@@ -10,14 +10,14 @@ mkdir -p "$pages"
 mkdir -p "$images"
 
 function gendot() {
-    for f in $(ls "$diagrams/$dir"); do
+    for f in $(ls "$diagrams/$dir"/*.dot | xargs -n 1 basename); do
         filename="${f%.*}"
         dot -T$imgext "/app/$diagrams/$dir/$f" -o "/app/$images/$dir/$filename.$imgext"
     done
 }
 
 function genseq() {
-    for f in $(ls "$diagrams/$dir"); do
+    for f in $(ls "$diagrams/$dir"/*.seq | xargs -n 1 basename); do
         filename="${f%.*}"
         seq-cli -p "/puppeteer.json" -i "/app/$diagrams/$dir/$f" -o "/app/$images/$dir/$filename.$imgext"
     done
