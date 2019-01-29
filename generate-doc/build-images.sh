@@ -9,29 +9,29 @@ imgext="svg"
 mkdir -p "$pages"
 mkdir -p "$images"
 
+
 function gendot() {
-    for f in  "$diagrams/$dir"/*.dot
+    for f in  "/$app/$doc/$diagrams/$dir"/*.dot
     do
         f=$(basename "$f")
         filename="${f%.*}"
-        dot -T$imgext "/app/$diagrams/$dir/$f" -o "/app/$images/$dir/$filename.$imgext"
+        dot -T$imgext "/$app/$doc/$diagrams/$dir/$f" -o "/$app/$doc/$images/$dir/$filename.$imgext"
     done
 }
 
 function genseq() {
-    for f in "$diagrams/$dir"/*.seq
+    for f in "/$app/$doc/$diagrams/$dir"/*.seq
     do
         f=$(basename "$f")
         filename="${f%.*}"
-        seq-cli -p "/puppeteer.json" -i "/app/$diagrams/$dir/$f" -o "/app/$images/$dir/$filename.$imgext"
+        seq-cli -p "/puppeteer.json" -i "/$app/$doc/$diagrams/$dir/$f" -o "/$app/$doc/$images/$dir/$filename.$imgext"
     done
 }
 
-
-for dir in "$diagrams"/*
+for dir in "/$app/$doc/$diagrams"/*
 do
     dir=$(basename "$dir")
-    mkdir -p "$images/$dir"
+    mkdir -p "/$app/$doc/$images/$dir"
     case "$dir" in
         dot) gendot ;;
         seq) genseq ;;

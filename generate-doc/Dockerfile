@@ -1,7 +1,7 @@
 FROM buildkite/puppeteer:latest
 
 RUN apt update && apt install -y git graphviz
-RUN npm install swg2md seq-cli
+RUN npm install swg2md seq-cli markdown-toc tree-node-cli
 COPY build.sh /build.sh
 COPY build-images.sh /build-images.sh
 COPY puppeteer.json /puppeteer.json

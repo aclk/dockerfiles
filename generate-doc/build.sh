@@ -2,10 +2,13 @@
 set -e
 
 pages="pages"
+app="app"
+doc="docs"
 
 source /build-images.sh
 
-for f in *.md
+for f in "/$app/$doc/"*.md
 do
-   node /render-doc.js "$f" > "$pages/$f"
+   f=$(basename "$f")
+   node /render-doc.js "/$app/$doc/$f" > "/$app/$doc/$pages/$f"
 done

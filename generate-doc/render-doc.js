@@ -3,6 +3,7 @@
 const swg2md = require('swg2md')
 const fs = require('fs')
 const toc = require('markdown-toc')
+const tree = require('tree-node-cli')
 
 if (process.argv.length <= 2) {
     console.log('Need a file name')
@@ -28,12 +29,18 @@ async function main() {
     let doc, contents, marker, output = ''
     doc = readcontents(filename)
 
-    contents = await swg2md.render('/template.mustache', 'swagger.yaml')
+    contents = await swg2md.render('/template.mustache', 'docs/swagger.yaml')
     marker = '<!--function detailed design-->'
     output = replace(doc, marker, contents)
 
     contents = toc(output).content
     marker = '<!--toc-->'
+    output = replace(output, marker, contents)
+
+    contents = `\`\`\`
+    ${tree('/app/', { exclude: [/node_modules/], maxDepth: 2 })}
+    \`\`\``
+    marker = '<!-- project structure -->'
     output = replace(output, marker, contents)
 
     console.log(output)
