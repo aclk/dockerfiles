@@ -27,10 +27,11 @@ function genseq() {
     done
 }
 
-for dir in "$diagrams"
+
+for dir in "$diagrams"/*
 do
+    dir=$(basename "$dir")
     mkdir -p "$images/$dir"
-    echo "$diagrams/$dir"
     case "$dir" in
         dot) gendot ;;
         seq) genseq ;;
