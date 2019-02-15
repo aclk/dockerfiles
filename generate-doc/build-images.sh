@@ -6,8 +6,7 @@ diagrams="diagrams"
 images="$pages/images"
 imgext="svg"
 
-mkdir -p "$pages"
-mkdir -p "$images"
+mkdir -p "/$app/$doc/$images"
 
 
 function gendot() {
